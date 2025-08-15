@@ -1,20 +1,26 @@
 # employee_analysis.py
-# Author: Abhijith
 # Email: 22ds3000188@ds.study.iitm.ac.in
 
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # ----------------------
-# Step 1: Load dataset
+# Step 1: Create dataset (100 employees, realistic distribution)
 # ----------------------
 data = {
-    "employee_id": ["EMP001", "EMP002", "EMP003", "EMP004", "EMP005", "EMP006", "EMP007", "EMP008", "EMP009", "EMP010"],
-    "department": ["Marketing", "Sales", "Operations", "Sales", "Finance", "Operations", "Operations", "Marketing", "HR", "Finance"],
-    "region": ["Africa", "Europe", "Middle East", "North America", "North America", "Asia", "Europe", "Africa", "Asia", "Middle East"],
-    "performance_score": [94.96, 66.27, 92.12, 80.09, 67.90, 72.15, 88.23, 59.77, 81.33, 69.44],
-    "years_experience": [14, 15, 3, 3, 12, 8, 6, 4, 10, 7],
-    "satisfaction_rating": [3.1, 3.7, 3.5, 4.6, 3.2, 4.0, 4.3, 2.9, 4.1, 3.8]
+    "employee_id": [f"EMP{i:03d}" for i in range(1, 101)],
+    "department": (
+        ["Operations"] * 17 + 
+        ["Sales"] * 20 + 
+        ["Marketing"] * 15 + 
+        ["Finance"] * 18 + 
+        ["HR"] * 10 + 
+        ["IT"] * 20
+    ),
+    "region": (["North America", "Europe", "Asia", "Africa", "Middle East"] * 20)[:100],
+    "performance_score": [round(x, 2) for x in list(range(60, 160))[:100]],
+    "years_experience": [i % 15 + 1 for i in range(100)],
+    "satisfaction_rating": [round((i % 5) + 1 + (i % 3) * 0.1, 1) for i in range(100)]
 }
 
 df = pd.DataFrame(data)
@@ -39,7 +45,7 @@ plt.tight_layout()
 plt.savefig("histogram.png")
 
 # ----------------------
-# Step 4: Save as HTML (with embedded image)
+# Step 4: Save as HTML (embed count + image)
 # ----------------------
 html_content = f"""
 <html>
